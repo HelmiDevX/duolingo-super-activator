@@ -1,0 +1,77 @@
+name: ⭐ Feature Request
+description: Suggest an idea for this project
+labels: ["enhancement"]
+assignees: 
+  - apersongithub
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the suggestion! Please fill out the details below.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Checklist
+      options:
+        - label: "I have read the [FAQ](https://github.com/apersongithub/Duolingo-Unlimited-Hearts/wiki/FAQ)."
+          required: true
+
+        - label: "I am on the latest version of the extension/userscript."
+          required: true
+
+        - label: "I understand that my feature request is not guaranteed to be implemented and that it may take some time to be reviewed. (Remember this is mostly unpaid labor!)"
+          required: true
+
+  - type: textarea
+    id: feature_description
+    attributes:
+      label: Describe the feature
+      description: What is the feature you want?
+      placeholder: "I would like the ability to..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: is_niche
+    attributes:
+      label: Is the feature niche?
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: version
+    attributes:
+      label: For which extension or userscript(s)?
+      options:
+        - Duolingo Max Extension
+        - Duolingo Max Userscript
+        - Duolingo Super Userscript
+        - Duolingo Unlimited Hearts Userscript
+        - Parity with all extensions/userscripts
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain the feature you want.
+      value: |
+        <details>
+        <summary>Screenshot(s)</summary>
+        
+        </details>
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Add any other context about the request here.
+    validations:
+      required: false
