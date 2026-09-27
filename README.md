@@ -1,4 +1,4 @@
-# <img src="https://d35aaqx5ub95lt.cloudfront.net/images/max/9f30dad6d7cc6723deeb2bd9e2f85dd8.svg" width="30px"> Duolingo Max
+﻿# <img src="https://d35aaqx5ub95lt.cloudfront.net/images/max/9f30dad6d7cc6723deeb2bd9e2f85dd8.svg" width="30px"> Duolingo Max
 
 ![Chrome Extension Rating](https://img.shields.io/chrome-web-store/rating/jkcaeflmchplggcelmodjobeakgmhmdb?style=for-the-badge&label=Chrome%20Rating&logo=google-chrome&logoColor=white)
 ![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/jkcaeflmchplggcelmodjobeakgmhmdb?style=for-the-badge&label=USERS)
@@ -74,3 +74,10 @@
 
 
 ## <img src="https://d35aaqx5ub95lt.cloudfront.net/vendor/7ef36bae3f9d68fc763d3451b5167836.svg" width="30px"> [Support Me](https://html-preview.github.io/?url=https://raw.githubusercontent.com/apersongithub/Duolingo-Unlimited-Hearts/refs/heads/main/extras/donations.html)
+
+
+---
+
+> **© 2026 حلمي امين حسان** — جميع الحقوق محفوظة  
+> Activation page built by [HelmiDevX](https://github.com/HelmiDevX)
+

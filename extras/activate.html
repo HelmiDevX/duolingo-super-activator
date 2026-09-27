@@ -1,183 +1,192 @@
 ﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Duolingo Super - تفعيل فوري</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--green:#58cc02;--green-dark:#46a302;--green-glow:rgba(88,204,2,.45);--gold:#ffd900;--blue:#1cb0f6;--bg:#0d1117;--surface:#161b22;--surface2:#1c2128;--border:rgba(255,255,255,.08);--text:#e6edf3;--muted:#8b949e}
-    html{scroll-behavior:smooth}
-    body{font-family:'Tajawal','Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-    .bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(88,204,2,.12) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 90% 80%,rgba(28,176,246,.07) 0%,transparent 70%)}
-    .container{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:40px 20px 60px}
-    .header{text-align:center;margin-bottom:50px}
-    .owl-wrap{display:inline-flex;align-items:center;justify-content:center;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(88,204,2,.2) 0%,transparent 70%);margin-bottom:20px;animation:float 3s ease-in-out infinite}
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    .owl-img{width:64px;filter:drop-shadow(0 0 16px var(--green-glow))}
-    .header h1{font-size:clamp(2rem,5vw,3rem);font-weight:900;background:linear-gradient(135deg,var(--green) 0%,#a3e635 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15;margin-bottom:14px}
-    .header p{font-size:1.1rem;color:var(--muted);line-height:1.7;max-width:520px;margin:0 auto}
-    .badge-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
-    .badge{padding:5px 14px;border-radius:20px;font-size:.8rem;font-weight:700;letter-spacing:.5px}
-    .badge-green{background:rgba(88,204,2,.15);color:var(--green);border:1px solid rgba(88,204,2,.3)}
-    .badge-gold{background:rgba(255,217,0,.12);color:var(--gold);border:1px solid rgba(255,217,0,.3)}
-    .badge-blue{background:rgba(28,176,246,.12);color:var(--blue);border:1px solid rgba(28,176,246,.3)}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px 32px;margin-bottom:30px}
-    .card h2{font-size:1.1rem;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:8px}
-    .mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-    .mode-btn{position:relative;cursor:pointer;background:var(--surface2);border:2px solid var(--border);border-radius:14px;padding:16px 20px;transition:all .2s ease;text-align:right}
-    .mode-btn:hover{border-color:var(--green);background:rgba(88,204,2,.05)}
-    .mode-btn.active{border-color:var(--green);background:rgba(88,204,2,.08);box-shadow:0 0 0 1px var(--green)}
-    .mode-btn .mode-icon{font-size:1.6rem;margin-bottom:6px;display:block}
-    .mode-btn .mode-name{font-weight:800;font-size:.95rem}
-    .mode-btn .mode-desc{font-size:.78rem;color:var(--muted);margin-top:3px;line-height:1.4}
-    .mode-btn .check{position:absolute;top:12px;left:12px;width:20px;height:20px;border-radius:50%;background:var(--green);display:none;align-items:center;justify-content:center;font-size:.65rem;color:#fff;font-weight:900}
-    .mode-btn.active .check{display:flex}
-    .steps-inner{position:relative}
-    .step{display:flex;gap:18px;align-items:flex-start;margin-bottom:24px}
-    .step:last-child{margin-bottom:0}
-    .step-num{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;font-weight:900;font-size:.9rem;display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px var(--green-glow)}
-    .step-body{flex:1;padding-top:5px}
-    .step-body h3{font-weight:800;font-size:1rem;margin-bottom:5px}
-    .step-body p{color:var(--muted);font-size:.9rem;line-height:1.6}
-    .tip{display:inline-block;background:rgba(255,217,0,.1);color:var(--gold);border:1px solid rgba(255,217,0,.25);border-radius:8px;padding:6px 12px;font-size:.82rem;margin-top:8px;font-weight:600}
-    .bookmarklet-area{text-align:center}
-    .bookmarklet-area .sub{color:var(--muted);font-size:.88rem;margin-bottom:28px}
-    #bookmarklet-btn{display:inline-flex;align-items:center;gap:12px;padding:18px 36px;border-radius:16px;text-decoration:none;font-family:inherit;font-weight:800;font-size:1.15rem;cursor:grab;background:linear-gradient(135deg,var(--green) 0%,#7ec700 50%,var(--green-dark) 100%);background-size:200% 200%;color:#fff;border:none;box-shadow:0 6px 30px var(--green-glow);transition:all .3s ease;animation:shimmer 3s linear infinite,btn-pulse 2.5s ease-in-out infinite;user-select:none}
-    #bookmarklet-btn:hover{filter:brightness(1.08)}
-    @keyframes shimmer{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
-    @keyframes btn-pulse{0%,100%{box-shadow:0 6px 30px var(--green-glow)}50%{box-shadow:0 8px 40px rgba(88,204,2,.65)}}
-    .drag-hint{margin-top:18px;display:flex;align-items:center;gap:8px;justify-content:center;color:var(--muted);font-size:.85rem}
-    .drag-arrow{font-size:1.2rem;animation:bounce-up 1.2s ease-in-out infinite}
-    @keyframes bounce-up{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-    .mobile-section{margin-top:22px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
-    .mobile-section h4{font-size:.9rem;font-weight:700;margin-bottom:10px;color:var(--muted)}
-    .code-scroll{background:#0d1117;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:12px 16px;font-family:'Courier New',monospace;font-size:.72rem;color:#a5d6a7;max-height:80px;overflow-y:auto;word-break:break-all;line-height:1.5;direction:ltr;text-align:left}
-    #copy-btn{margin-top:10px;width:100%;padding:10px;border-radius:10px;background:rgba(88,204,2,.15);color:var(--green);border:1px solid rgba(88,204,2,.3);font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
-    #copy-btn:hover{background:rgba(88,204,2,.25)}
-    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-    .feature-item{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:18px 20px;transition:all .2s}
-    .feature-item:hover{border-color:rgba(88,204,2,.3);transform:translateY(-2px)}
-    .fi{font-size:1.8rem;margin-bottom:8px;display:block}
-    .feature-item h4{font-weight:800;font-size:.92rem;margin-bottom:4px}
-    .feature-item p{font-size:.8rem;color:var(--muted);line-height:1.5}
-    .footer{text-align:center;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem;line-height:1.8}
-    .footer a{color:var(--blue);text-decoration:none}
-    .disclaimer{background:rgba(255,75,75,.08);border:1px solid rgba(255,75,75,.2);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:.82rem;color:#f85149;line-height:1.6}
-    .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;padding:14px 28px;border-radius:14px;font-weight:700;font-size:.95rem;z-index:9999;box-shadow:0 8px 30px var(--green-glow);display:none}
-    .toast.show{display:block;animation:toast-in .4s ease}
-    @keyframes toast-in{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>🦉 تفعيل Duolingo Super — حلمي امين حسان</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#58cc02;--gd:#46a302;--gg:rgba(88,204,2,.4);--bg:#0d1117;--s:#161b22;--s2:#1c2128;--bd:rgba(255,255,255,.08);--t:#e6edf3;--m:#8b949e;--gold:#ffd900}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;overflow-x:hidden}
+
+/* Background glow */
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -5%,rgba(88,204,2,.1) 0%,transparent 65%);pointer-events:none;z-index:0}
+
+.wrap{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:30px 20px 50px}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:40px 20px 30px;margin-bottom:20px}
+.owl{font-size:5rem;animation:bob 2.5s ease-in-out infinite;display:block;margin-bottom:16px}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero h1{font-size:2.2rem;font-weight:900;line-height:1.2;margin-bottom:12px;background:linear-gradient(135deg,var(--g),#a3e635,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--m);font-size:1.05rem;line-height:1.7}
+
+/* ── Steps ── */
+.steps{display:flex;flex-direction:column;gap:16px;margin-bottom:30px}
+.step{background:var(--s);border:1px solid var(--bd);border-radius:18px;padding:22px 22px;display:flex;align-items:center;gap:18px;transition:border-color .2s}
+.step:hover{border-color:rgba(88,204,2,.3)}
+.step-n{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--g),var(--gd));font-size:1.3rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px var(--gg)}
+.step-body h3{font-size:1.05rem;font-weight:800;margin-bottom:4px}
+.step-body p{font-size:.88rem;color:var(--m);line-height:1.5}
+
+/* ── Bookmarklet Button ── */
+.bm-zone{background:var(--s);border:1px solid var(--bd);border-radius:22px;padding:32px 24px;text-align:center;margin-bottom:20px}
+.bm-zone h2{font-size:1.1rem;font-weight:800;margin-bottom:6px}
+.bm-zone .hint{color:var(--m);font-size:.88rem;margin-bottom:26px}
+
+/* Animated drag arrows */
+.drag-visual{position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:24px}
+.arrow-row{display:flex;gap:8px}
+.arr{font-size:1.6rem;color:var(--g);animation:arr-up .9s ease-in-out infinite}
+.arr:nth-child(2){animation-delay:.15s}
+.arr:nth-child(3){animation-delay:.3s}
+@keyframes arr-up{0%,100%{transform:translateY(4px);opacity:.3}50%{transform:translateY(-4px);opacity:1}}
+.drag-label{font-size:.82rem;color:var(--m);background:rgba(88,204,2,.1);border:1px solid rgba(88,204,2,.2);border-radius:8px;padding:4px 12px}
+
+/* The main bookmarklet drag button */
+#bm{display:inline-flex;align-items:center;gap:12px;padding:20px 40px;border-radius:18px;text-decoration:none;font-family:'Tajawal',sans-serif;font-weight:900;font-size:1.3rem;cursor:grab;background:linear-gradient(135deg,var(--g),#7ec700,var(--gd));color:#fff;border:none;box-shadow:0 8px 32px var(--gg);animation:pulse-glow 2s ease-in-out infinite;user-select:none;-webkit-user-drag:element}
+#bm:active{cursor:grabbing;transform:scale(.97)}
+#bm:hover{filter:brightness(1.08);box-shadow:0 12px 40px rgba(88,204,2,.6)}
+@keyframes pulse-glow{0%,100%{box-shadow:0 8px 32px var(--gg)}50%{box-shadow:0 10px 44px rgba(88,204,2,.7)}}
+
+/* Separator */
+.sep{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--m);font-size:.85rem}
+.sep::before,.sep::after{content:'';flex:1;height:1px;background:var(--bd)}
+
+/* Open Duolingo Button */
+#go-btn{display:block;width:100%;padding:18px;border-radius:16px;background:linear-gradient(135deg,#1cb0f6,#0e8fc7);color:#fff;font-family:'Tajawal',sans-serif;font-weight:900;font-size:1.15rem;border:none;cursor:pointer;box-shadow:0 6px 24px rgba(28,176,246,.4);transition:all .2s;margin-bottom:10px}
+#go-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+#go-btn:active{transform:translateY(1px)}
+
+/* Mobile copy */
+.mobile{background:var(--s2);border:1px solid var(--bd);border-radius:14px;padding:16px 18px;margin-top:16px}
+.mobile h4{font-size:.88rem;font-weight:700;color:var(--m);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.code-box{background:#0d1117;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px 14px;font-family:'Courier New',monospace;font-size:.7rem;color:#a5d6a7;max-height:72px;overflow-y:auto;word-break:break-all;line-height:1.5;direction:ltr;text-align:left}
+#cpbtn{margin-top:10px;width:100%;padding:10px;border-radius:10px;background:rgba(88,204,2,.15);color:var(--g);border:1px solid rgba(88,204,2,.3);font-family:'Tajawal',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s}
+#cpbtn:hover{background:rgba(88,204,2,.25)}
+
+/* Success toast */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--g);color:#fff;padding:14px 28px;border-radius:14px;font-weight:800;font-size:.95rem;z-index:9999;box-shadow:0 6px 24px var(--gg);transition:transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
+.toast.up{transform:translateX(-50%) translateY(0)}
+
+/* Footer */
+footer{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--bd);color:var(--m);font-size:.83rem;line-height:1.9}
+footer strong{color:var(--g)}
+footer .disc{background:rgba(255,75,75,.08);border:1px solid rgba(255,75,75,.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.8rem;color:#f85149;line-height:1.6}
+</style>
 </head>
 <body>
-  <div class="bg-canvas"></div>
-  <div class="toast" id="toast"></div>
-  <div class="container">
+<div class="wrap">
 
-    <header class="header">
-      <div class="owl-wrap">
-        <img class="owl-img" src="https://d35aaqx5ub95lt.cloudfront.net/images/max/9f30dad6d7cc6723deeb2bd9e2f85dd8.svg" alt="owl" onerror="this.outerHTML='<span style=font-size:3.5rem>&#129417;</span>'" />
-      </div>
-      <h1>تفعيل Duolingo Super<br/>في ثانية واحدة</h1>
-      <p>أرسل هذا الرابط لأي شخص — بدون تثبيت أي إضافة، بضغطة زر واحدة يحصل على ميزات الاشتراك المدفوع.</p>
-      <div class="badge-row">
-        <span class="badge badge-green">✅ بدون إضافات</span>
-        <span class="badge badge-gold">⚡ تفعيل فوري</span>
-        <span class="badge badge-blue">🌐 أي متصفح</span>
-      </div>
-    </header>
-
-    <div class="card">
-      <h2>🎯 اختر نوع التفعيل</h2>
-      <div class="mode-grid">
-        <button class="mode-btn active" data-mode="max" onclick="selectMode(this,'max')">
-          <span class="check">✓</span><span class="mode-icon">⭐</span>
-          <div class="mode-name">Duolingo Max</div>
-          <div class="mode-desc">قلوب غير محدودة + ميزات Max الكاملة</div>
-        </button>
-        <button class="mode-btn" data-mode="super" onclick="selectMode(this,'super')">
-          <span class="check">✓</span><span class="mode-icon">💎</span>
-          <div class="mode-name">Duolingo Super</div>
-          <div class="mode-desc">ميزات Super — premium subscription</div>
-        </button>
-        <button class="mode-btn" data-mode="hearts" onclick="selectMode(this,'hearts')">
-          <span class="check">✓</span><span class="mode-icon">❤️</span>
-          <div class="mode-name">قلوب لا نهائية فقط</div>
-          <div class="mode-desc">Unlimited Hearts بدون ميزات إضافية</div>
-        </button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>📋 خطوات التفعيل</h2>
-      <div class="steps-inner">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h3>اسحب الزر الأخضر إلى شريط المفضلة</h3>
-            <p>اضغط على الزر الأخضر أدناه مطوّلاً واسحبه إلى شريط Bookmarks في متصفحك.</p>
-            <span class="tip">💡 لا يظهر الشريط؟ فعّله من: View ← Bookmarks Bar</span>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h3>افتح موقع Duolingo وسجّل الدخول</h3>
-            <p>انتقل إلى <strong>duolingo.com</strong> وسجّل دخولك بحسابك العادي.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h3>اضغط على الـ Bookmark الذي أضفته</h3>
-            <p>اضغط عليه من شريط المفضلة — ستظهر رسالة تأكيد خضراء وتُفعَّل الميزات فوراً.</p>
-            <span class="tip">🔄 أعد تحميل الصفحة إذا لم تظهر الميزات فوراً</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card bookmarklet-area">
-      <h2 style="justify-content:center">🟢 زر التفعيل — اسحبه إلى المفضلة</h2>
-      <p class="sub">اسحب الزر أدناه إلى شريط المفضلة في متصفحك</p>
-      <a id="bookmarklet-btn" href="#" onclick="handleBtnClick(event)">
-        <span style="font-size:1.5rem">🦉</span> تفعيل Duolingo Super
-      </a>
-      <div class="drag-hint">
-        <span class="drag-arrow">↑</span>
-        <span>اسحب الزر نحو شريط المفضلة في الأعلى</span>
-      </div>
-      <div class="mobile-section">
-        <h4>📱 هاتف / iOS / Safari — انسخ الكود والصقه في شريط العناوين على duolingo.com</h4>
-        <div class="code-scroll" id="bm-code-display"></div>
-        <button id="copy-btn" onclick="copyCode()">📋 نسخ الكود</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>✨ ما الذي يُفعَّل؟</h2>
-      <div class="features-grid" id="features-grid"></div>
-    </div>
-
-    <footer class="footer">
-      <div class="disclaimer">⚠️ هذه الأداة مخصصة للأغراض التعليمية فقط. جميع التعديلات تتم محلياً في متصفحك. المشروع غير مرتبط بـ Duolingo.</div>
-      <p>مصدر المشروع: <a href="https://github.com/apersongithub/Duolingo-Unlimited-Hearts" target="_blank">Duolingo Unlimited Hearts على GitHub</a></p>
-    </footer>
+  <!-- Hero -->
+  <div class="hero">
+    <span class="owl">🦉</span>
+    <h1>فعّل Duolingo Super<br/>مجاناً الآن</h1>
+    <p>بدون تثبيت أي إضافة — اتبع 3 خطوات فقط</p>
   </div>
 
-  <script>
-  const MODES={max:{item:'gold_subscription',trackKey:'has_item_gold_subscription',features:[{icon:'❤️',name:'قلوب غير محدودة',desc:'لا تنتهي قلوبك أثناء الدروس'},{icon:'🏋️',name:'مركز التدريب',desc:'وصول كامل لـ Practice Hub'},{icon:'🤖',name:'ميزات Max',desc:'تُرفع قيود الاشتراك على الواجهة'},{icon:'🎤',name:'تمارين النطق',desc:'متاحة على جميع المتصفحات'}]},super:{item:'premium_subscription',trackKey:'has_item_premium_subscription',features:[{icon:'❤️',name:'قلوب لا نهاية لها',desc:'استمر في التعلم دون توقف'},{icon:'💎',name:'باجة Super',desc:'تظهر في ملفك الشخصي'},{icon:'🏋️',name:'مركز التدريب',desc:'وصول لجميع التمارين'},{icon:'⚡',name:'تجربة سلسة',desc:'بدون قيود الحساب المجاني'}]},hearts:{item:'gold_subscription',trackKey:'has_item_gold_subscription',heartOnly:true,features:[{icon:'❤️',name:'قلوب لا تنتهي',desc:'كرر الدروس بلا حدود'},{icon:'✅',name:'تفعيل لحظي',desc:'يعمل بضغطة واحدة'},{icon:'🔄',name:'يعمل دائماً',desc:'في كل جلسة تشغيل'},{icon:'📱',name:'الموقع الرسمي',desc:'للويب فقط، لا تطبيق الهاتف'}]}};
-  let currentMode='max';
-  function buildBM(mode){const c=MODES[mode];const itm=c.item;const tk=c.trackKey;return`javascript:(function(){if(!location.hostname.includes('duolingo')){alert('افتح هذا على duolingo.com أولاً!');return;}if(window.__DLX_ACT__){showOK('مُفعَّل بالفعل!');return;}window.__DLX_ACT__=true;const SI={${itm}:{itemName:'${itm}',subscriptionInfo:{vendor:'STRIPE',renewing:true,isFamilyPlan:true,expectedExpiration:9999999999000}}};function mod(t){try{const d=JSON.parse(t);d.hasPlus=true;if(!d.trackingProperties)d.trackingProperties={};d.trackingProperties.${tk}=true;if(d.health)d.health.unlimitedHeartsAvailable=true;d.shopItems={...d.shopItems,...SI};return JSON.stringify(d);}catch{return t;}}function chk(u,m){return m.toUpperCase()==='GET'&&/\\/\\d{4}-\\d{2}-\\d{2}\\/users\\//.test(u)&&!u.includes('/shop-items');}const oF=window.fetch;window.fetch=function(r,o){const u=r instanceof Request?r.url:String(r);const m=r instanceof Request?r.method:(o&&o.method||'GET');if(chk(u,m)){return oF.apply(this,arguments).then(async res=>{const t=await res.clone().text();let h={};try{res.headers.forEach((v,k)=>h[k]=v);}catch{}return new Response(mod(t),{status:res.status,statusText:res.statusText,headers:h});});}return oF.apply(this,arguments);};const oXo=XMLHttpRequest.prototype.open,oXs=XMLHttpRequest.prototype.send;XMLHttpRequest.prototype.open=function(m,u,...a){this.__m=m;this.__u=u;oXo.call(this,m,u,...a);};XMLHttpRequest.prototype.send=function(){if(chk(this.__u||'',this.__m||'GET')){const oc=this.onreadystatechange,x=this;this.onreadystatechange=function(){if(x.readyState===4&&x.status>=200&&x.status<300){try{const md=mod(x.responseText);Object.defineProperty(x,'responseText',{writable:true,value:md});Object.defineProperty(x,'response',{writable:true,value:md});}catch{}}if(oc)oc.apply(this,arguments);};}oXs.apply(this,arguments);};showOK('✅ تم التفعيل! أعد التحميل إذا لزم');function showOK(msg){const n=document.createElement('div');n.style.cssText='position:fixed;top:20px;right:20px;background:linear-gradient(135deg,#58cc02,#46a302);color:#fff;padding:16px 22px;border-radius:14px;font-family:Arial;font-weight:bold;font-size:15px;z-index:999999;box-shadow:0 4px 24px rgba(88,204,2,.5);direction:rtl;';n.textContent=msg;document.body.appendChild(n);setTimeout(()=>n.remove(),4500);}})();`;}
-  function selectMode(el,mode){document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');currentMode=mode;updateBM();renderFeatures();}
-  function updateBM(){const code=buildBM(currentMode);document.getElementById('bookmarklet-btn').href=code;document.getElementById('bm-code-display').textContent=code;}
-  function handleBtnClick(e){e.preventDefault();showToast('📌 اسحب هذا الزر إلى شريط المفضلة في الأعلى، لا تضغط عليه هنا!',3500);}
-  function renderFeatures(){const g=document.getElementById('features-grid');g.innerHTML='';MODES[currentMode].features.forEach(f=>{g.innerHTML+=`<div class="feature-item"><span class="fi">${f.icon}</span><h4>${f.name}</h4><p>${f.desc}</p></div>`;});}
-  function copyCode(){const code=buildBM(currentMode);navigator.clipboard.writeText(code).then(()=>{document.getElementById('copy-btn').textContent='✅ تم النسخ!';setTimeout(()=>document.getElementById('copy-btn').textContent='📋 نسخ الكود',2500);showToast('✅ الصق الكود في شريط العناوين على duolingo.com',3000);}).catch(()=>{const ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('✅ تم النسخ!',2000);});}
-  function showToast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
-  updateBM();renderFeatures();
-  </script>
+  <!-- Steps -->
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-body">
+        <h3>اسحب الزر الأخضر إلى شريط المفضلة ↑</h3>
+        <p>اضغط مطوّلاً على الزر الأخضر أدناه واسحبه نحو الأعلى إلى شريط المفضلة في متصفحك</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-body">
+        <h3>افتح موقع Duolingo</h3>
+        <p>اضغط الزر الأزرق أدناه لفتح Duolingo مباشرة أو انتقل إلى duolingo.com بنفسك</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-body">
+        <h3>اضغط على الزر الأخضر في المفضلة</h3>
+        <p>وأنت على موقع Duolingo، اضغط الزر الذي سحبته في الخطوة 1 — ستظهر رسالة خضراء وتُفعَّل الميزات 🎉</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bookmarklet zone -->
+  <div class="bm-zone">
+    <h2>🟢 الزر السحري — اسحبه لشريط المفضلة</h2>
+    <p class="hint">الخطوة 1 من 3</p>
+
+    <div class="drag-visual">
+      <div class="arrow-row">
+        <span class="arr">↑</span>
+        <span class="arr">↑</span>
+        <span class="arr">↑</span>
+      </div>
+      <span class="drag-label">اسحب للأعلى نحو شريط المفضلة</span>
+    </div>
+
+    <a id="bm" href="#" onclick="onBmClick(event)">
+      <span style="font-size:1.6rem">🦉</span>
+      تفعيل Duolingo Super
+    </a>
+
+    <div class="sep">أو اضغط لفتح Duolingo مباشرة</div>
+
+    <button id="go-btn" onclick="openDuolingo()">
+      🚀 افتح Duolingo الآن
+    </button>
+
+    <div class="mobile">
+      <h4>📱 هاتف؟ — انسخ الكود والصقه في شريط العناوين على duolingo.com</h4>
+      <div class="code-box" id="code-box"></div>
+      <button id="cpbtn" onclick="copyCode()">📋 نسخ الكود</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="disc">⚠️ للأغراض التعليمية فقط — جميع التعديلات تتم محلياً في متصفحك</div>
+    <p>صُنع بـ ❤️ بواسطة <strong>حلمي امين حسان</strong></p>
+    <p>© 2026 جميع الحقوق محفوظة لـ حلمي امين حسان</p>
+    <p style="margin-top:6px;font-size:.78rem">
+      <a href="https://github.com/HelmiDevX/duolingo-super-activator" style="color:#1cb0f6;text-decoration:none" target="_blank">عرض المشروع على GitHub</a>
+    </p>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Build bookmarklet code
+const BM_CODE = `javascript:(function(){if(!location.hostname.includes('duolingo')){alert('افتح هذا على duolingo.com أولاً!');return;}if(window.__DLX__){toast('مُفعَّل بالفعل! ✅');return;}window.__DLX__=true;const SI={gold_subscription:{itemName:'gold_subscription',subscriptionInfo:{vendor:'STRIPE',renewing:true,isFamilyPlan:true,expectedExpiration:9999999999000}}};function mod(t){try{const d=JSON.parse(t);d.hasPlus=true;if(!d.trackingProperties)d.trackingProperties={};d.trackingProperties.has_item_gold_subscription=true;if(d.health)d.health.unlimitedHeartsAvailable=true;d.shopItems={...d.shopItems,...SI};return JSON.stringify(d);}catch{return t;}}function chk(u,m){return(m||'GET').toUpperCase()==='GET'&&/\\/\\d{4}-\\d{2}-\\d{2}\\/users\\//.test(String(u))&&!String(u).includes('/shop-items');}const oF=window.fetch;window.fetch=function(r,o){const u=r instanceof Request?r.url:String(r);const m=r instanceof Request?r.method:(o&&o.method)||'GET';if(chk(u,m)){return oF.apply(this,arguments).then(async res=>{const t=await res.clone().text();let h={};try{res.headers.forEach((v,k)=>h[k]=v);}catch{}return new Response(mod(t),{status:res.status,statusText:res.statusText,headers:h});});}return oF.apply(this,arguments);};const oXo=XMLHttpRequest.prototype.open,oXs=XMLHttpRequest.prototype.send;XMLHttpRequest.prototype.open=function(m,u,...a){this.__m=m;this.__u=u;oXo.call(this,m,u,...a);};XMLHttpRequest.prototype.send=function(){if(chk(this.__u,this.__m)){const oc=this.onreadystatechange,x=this;this.onreadystatechange=function(){if(x.readyState===4&&x.status>=200&&x.status<300){try{const md=mod(x.responseText);Object.defineProperty(x,'responseText',{writable:true,value:md});Object.defineProperty(x,'response',{writable:true,value:md});}catch{}}if(oc)oc.apply(this,arguments);};}oXs.apply(this,arguments);};toast('✅ تم التفعيل! أعد التحميل إذا لزم');function toast(msg){const n=document.createElement('div');n.style.cssText='position:fixed;top:20px;right:20px;background:linear-gradient(135deg,#58cc02,#46a302);color:#fff;padding:14px 22px;border-radius:14px;font-family:Arial;font-weight:bold;font-size:15px;z-index:999999;box-shadow:0 4px 24px rgba(88,204,2,.5);direction:rtl;max-width:280px;';n.textContent=msg;document.body.appendChild(n);setTimeout(()=>n.remove(),4500);}})();`;
+
+document.getElementById('bm').href = BM_CODE;
+document.getElementById('code-box').textContent = BM_CODE;
+
+function onBmClick(e){
+  e.preventDefault();
+  showToast('📌 اسحب الزر الأخضر إلى الأعلى نحو شريط المفضلة');
+}
+
+function openDuolingo(){
+  window.open('https://www.duolingo.com', '_blank');
+  setTimeout(()=> showToast('الآن اضغط الزر الأخضر في شريط المفضلة! ✅'), 800);
+}
+
+function copyCode(){
+  const btn = document.getElementById('cpbtn');
+  navigator.clipboard.writeText(BM_CODE)
+    .then(()=>{ btn.textContent='✅ تم النسخ!'; setTimeout(()=>btn.textContent='📋 نسخ الكود',2500); })
+    .catch(()=>{ const t=document.createElement('textarea'); t.value=BM_CODE; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); btn.textContent='✅ تم النسخ!'; setTimeout(()=>btn.textContent='📋 نسخ الكود',2500); });
+  showToast('✅ الصق الكود في شريط العناوين على duolingo.com');
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('up');
+  setTimeout(()=> t.classList.remove('up'), 3500);
+}
+</script>
 </body>
 </html>
